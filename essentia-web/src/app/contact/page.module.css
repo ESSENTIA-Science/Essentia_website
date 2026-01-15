@@ -1,0 +1,65 @@
+.page {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 12vh 10vw;
+  font-family: var(--font-pretendard), "Noto Serif", serif;
+  color: #000;
+}
+
+.card {
+  width: min(520px, 100%);
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+  padding: 32px;
+  display: grid;
+  gap: 16px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+}
+
+.title {
+  margin: 0;
+  font-size: 30px;
+}
+
+.subtitle {
+  margin: 0;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.buttonGroup {
+  display: grid;
+  gap: 10px;
+}
+
+.primaryButton,
+.secondaryButton,
+.applyButton {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 16px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.primaryButton {
+  background: #155462;
+  color: #fff;
+  border: none;
+}
+
+.secondaryButton {
+  background: #fff;
+  color: #000;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.applyButton {
+  background: #111;
+  color: #fff;
+  border: none;
+}

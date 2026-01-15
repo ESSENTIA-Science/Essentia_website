@@ -1,0 +1,98 @@
+.wrapper {
+  padding: 120px 80px;
+  color: white;
+  width: 100%;
+}
+
+.error {
+  margin-top: 8px;
+  color: #ff8a8a;
+  font-size: 14px;
+}
+
+.title {
+  font-size: 28px;
+  margin-bottom: 48px;
+  letter-spacing: 0.05em;
+}
+
+.flowWrap {
+  width: 100%;
+  height: clamp(300px, 30vw, 2000px);
+  background: #0b0b0b;
+  color: #000000;
+  overflow: hidden;
+}
+
+.flowNode {
+  padding: 12px 18px;
+  border: 1px solid #444;
+  background: #111;
+  color: #f0f0f0;
+  font-size: 36px;
+  font-weight: 600;
+  border-radius: 10px;
+  text-align: center;
+  min-width: 120px;
+}
+
+.container {
+  display: flex;
+  border: 1px solid #2a2a2a;
+  min-height: 420px;
+}
+
+.sidebar {
+  width: 260px;
+  border-right: 1px solid #2a2a2a;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.depButton {
+  background: transparent;
+  border: 1px solid #333;
+  padding: 10px 14px;
+  text-align: left;
+  color: #aaa;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.depButton:hover {
+  background: #111;
+}
+
+.active {
+  background: white;
+  color: black;
+}
+
+.detail {
+  flex: 1;
+  padding: 32px;
+}
+
+.detailTitle {
+  font-size: 20px;
+  margin-bottom: 24px;
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.card {
+  padding: 14px 20px;
+  border: 1px solid #444;
+  background: #0b0b0b;
+  font-size: 14px;
+}
+
+.empty {
+  color: #666;
+}

@@ -1,0 +1,118 @@
+.page {
+  --gray-rgb: 0, 0, 0;
+  --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
+  --gray-alpha-100: rgba(var(--gray-rgb), 0.05);
+
+  --button-primary-hover: #383838;
+  --button-secondary-hover: #f2f2f2;
+  background: radial-gradient(1200px 600px at 20% 0%, rgba(21, 84, 98, 0.25), transparent),
+    radial-gradient(900px 500px at 100% 20%, rgba(23, 92, 108, 0.25), transparent),
+    #eef3f4;
+  display: grid;
+  place-items: center;
+  min-height: 100svh;
+  font-family: var(--font-pretendard), "Noto Serif", serif;
+  word-break: keep-all;
+  padding: 0 10vw ;
+}
+
+.card {
+  width: min(420px, 100%);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+  display: grid;
+  gap: 14px;
+}
+
+.eyebrow {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  color: rgba(0, 0, 0, 0.5);
+  margin: 0;
+}
+
+.title {
+  font-size: 32px;
+  color: rgba(0, 0, 0, 0.7);
+  font-weight: 700;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 15px;
+  color: rgba(0, 0, 0, 0.7);
+  margin: 0 0 10px;
+}
+
+.buttonGroup {
+  display: grid;
+  gap: 10px;
+}
+
+.loginButton {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.loginButton svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.loginButton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+}
+
+.loginButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+  transform: none;
+  box-shadow: none;
+}
+
+.google {
+  background: #fff;
+  border-color: rgba(0, 0, 0, 0.12);
+  color: #1f1f1f;
+}
+
+.kakao {
+  background: #fee500;
+  border-color: rgba(0, 0, 0, 0.1);
+  color: #1f1f1f;
+}
+
+.github {
+  background: #111;
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.notice {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.6);
+  line-height: 1.6;
+  margin: 8px 0 0;
+}
+
+.error {
+  font-size: 13px;
+  color: #b42318;
+  margin: 0;
+}
