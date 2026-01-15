@@ -1,10 +1,9 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
 import styles from "./page.module.css";
 import OrganizationSection from '@/components/organization/OrganizationSection';
 
-export default function about() {
+export default function About() {
     return(
         <div className={styles.page}>
             <div className={styles.aboutContent}>

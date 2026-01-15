@@ -25,9 +25,6 @@ const projects = [
   },
 ];
 
-type Project = (typeof projects)[number];
-
-
 export default function ProjectsPage() {
   return (
     <div className={styles.page}>

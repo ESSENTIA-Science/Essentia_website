@@ -1,32 +1,11 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import styles from "./page.module.css";
 import Galaxy from "@/components/Galaxy";
-import NavBar from '@/components/CardNav';
-import OrganizationSection from '@/components/organization/OrganizationSection';
-import logo from './icon.svg';
 
 
 export default function Home() {
-  const aboutRef = useRef<HTMLElement | null>(null);
-  const [isLightNav, setIsLightNav] = useState(false);
-
-  useEffect(() => {
-    const target = aboutRef.current;
-    if (!target) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsLightNav(entry.isIntersecting);
-      },
-      { threshold: 0.5 }
-    );
-
-    observer.observe(target);
-    return () => observer.disconnect();
-  }, []);
 
   return (
     <div className={styles.page}>
@@ -41,7 +20,7 @@ export default function Home() {
           </div>
           <div className={styles.mouse}></div>
         </section>
-        <section ref={aboutRef} className={`${styles.about} ${styles.scrollArea}`} id="navBright">
+        <section className={`${styles.about} ${styles.scrollArea}`} id="navBright">
           <div className={styles.aboutContent}>
             <div className={styles.aboutTitle}>
               <img className={styles.aboutLogo} src="./icon.svg"></img>

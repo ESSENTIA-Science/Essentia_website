@@ -7,7 +7,7 @@ import { FcGoogle } from "react-icons/fc";
 import { RiKakaoTalkFill } from "react-icons/ri";
 import { VscGithub } from "react-icons/vsc";
 
-export default function login() {
+export default function Login() {
     const [loadingProvider, setLoadingProvider] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
 

@@ -24,7 +24,6 @@ type Member = {
 export default function ApplyPage() {
   const { status } = useSession();
   const router = useRouter();
-  const [member, setMember] = useState<Member | null>(null);
   const [form, setForm] = useState({ school: "", intro: "", motivation: "", agreed: false });
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
@@ -37,7 +36,6 @@ export default function ApplyPage() {
         const res = await fetch(`/api/me?ts=${Date.now()}`, { cache: "no-store" });
         const data = await res.json();
         if (!res.ok) return;
-        setMember(data.member ?? null);
         if (data.member?.class !== null && data.member?.class !== undefined && data.member.class <= 2) {
           alert("넌 못 지나간다");
           router.replace("/");
@@ -47,12 +45,12 @@ export default function ApplyPage() {
           setDone(true);
         }
       } catch {
-        setMember(null);
+        return;
       }
     };
 
     loadMember();
-  }, [status]);
+  }, [status, router]);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();

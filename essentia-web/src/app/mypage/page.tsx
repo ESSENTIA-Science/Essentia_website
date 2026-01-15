@@ -29,8 +29,8 @@ type Org = {
     depth: number;
 };
 
-export default function mypage () {
-    const { data: session, status } = useSession();
+export default function MyPage() {
+    const { status } = useSession();
     const router = useRouter();
     const [member, setMember] = useState<Member | null>(null);
     const [members, setMembers] = useState<Member[]>([]);

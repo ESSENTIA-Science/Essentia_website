@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL ?? "",
@@ -40,7 +40,7 @@ export async function GET(
 
   const comments = (data ?? []).map((item) => {
     const canEdit = canEditAll || (email ? item.author_email === email : false);
-    const { author_email, ...rest } = item;
+    const { author_email: _authorEmail, ...rest } = item;
     return { ...rest, canEdit };
   });
 

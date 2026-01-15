@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL ?? "",
@@ -47,7 +47,7 @@ export async function GET(
     }
   }
 
-  const { author_email, ...safePost } = data;
+  const { author_email: _authorEmail, ...safePost } = data;
   return NextResponse.json({ post: safePost, canEdit, canDelete });
 }
 
@@ -81,7 +81,6 @@ export async function PATCH(
     return NextResponse.json({ error: memberError.message }, { status: 500 });
   }
 
-  const memberClass = member?.class ?? null;
   const canEdit = post?.author_email === email;
 
   if (!canEdit) {

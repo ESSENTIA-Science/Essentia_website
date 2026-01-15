@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState, useCallback } from 'react';
 import { usePathname } from 'next/navigation';
-import { ReactFlow, Background, BackgroundVariant, EdgeText, Controls } from '@xyflow/react';
+import { ReactFlow, Background, EdgeText, Controls } from '@xyflow/react';
 import type { Edge, Node } from '@xyflow/react';
 import styles from './OrganizationSection.module.css';
 import '@xyflow/react/dist/style.css';
@@ -23,7 +23,6 @@ export default function OrganizationSection() {
   const [orgs, setOrgs] = useState<Organization[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const depth1Names = useMemo(() => getDepth1Names(orgs), [orgs]);
   const fetchOrgs = useCallback(async () => {
     setLoading(true);
     try {

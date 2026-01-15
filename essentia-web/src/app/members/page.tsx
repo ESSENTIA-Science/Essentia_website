@@ -21,30 +21,9 @@ export type member = {
   member_code: string;
 }
 
-export function memberCard() {
-  return(
-    <>
-      <div className={styles.name}></div>
-      <div className={styles.depth1}></div>
-      <div className={styles.depth2}></div>
-    </>
-  )
-}
-
-export function memberCardE() {
-  return(
-    <>
-      <div className={styles.name}></div>
-      <div className={styles.subClass}></div>
-    </>
-  )
-}
-
-export default function members() {
+export default function Members() {
   const [members, setMembers] = useState<member[]>([]);
   const [orgs, setOrgs] = useState<Organization[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   useEffect(() => {
     const fetchOrgs = async () => {
       try {
@@ -58,14 +37,10 @@ export default function members() {
           throw new Error(data?.error ?? 'Failed to load organizations');
         }
 
-        setError(null);
         setMembers(data);
         console.log('[OrganizationSection] organizations', data);
       } catch (err) {
-        const msg = err instanceof Error ? err.message : 'Unknown error';
-        setError(msg);
-      } finally {
-        setLoading(false);
+        return;
       }
     };
 
@@ -88,8 +63,7 @@ export default function members() {
 
         setOrgs(data);
       } catch (err) {
-        const msg = err instanceof Error ? err.message : 'Unknown error';
-        setError(msg);
+        return;
       }
     };
 

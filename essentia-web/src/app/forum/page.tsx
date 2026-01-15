@@ -3,8 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 import styles from "./page.module.css";
 
 type Post = {
@@ -274,10 +272,9 @@ export default function ForumPage() {
                 <span className={styles.divider} />
                 <button type="button" onClick={() => applyFormat("bold")}><strong>B</strong></button>
                 <button type="button" onClick={() => applyFormat("italic")}><em>I</em></button>
-                <button type="button" onClick={() => applyFormat("bullet")}>•</button>
-                <button type="button" onClick={() => applyFormat("quote")}>"</button>
-                <button type="button" onClick={() => applyFormat("link")}>🔗</button>
-                <button type="button" onClick={() => applyFormat("image")}>🖼</button>
+                <button type="button" onClick={() => applyFormat("bullet")}>-</button>
+                <button type="button" onClick={() => applyFormat("link")}>Link</button>
+                <button type="button" onClick={() => applyFormat("image")}>Img</button>
                 <button type="button" onClick={() => applyFormat("code")}>{"</>"}</button>
               </div>
               <textarea
