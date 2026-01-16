@@ -1,6 +1,6 @@
  "use client";
 
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState, useCallback } from 'react';
 import { usePathname, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { gsap } from 'gsap';
@@ -61,6 +61,8 @@ const CardNav: React.FC<CardNavProps> = ({
   const navRef = useRef<HTMLDivElement | null>(null);
   const cardsRef = useRef<HTMLDivElement[]>([]);
   const tlRef = useRef<gsap.core.Timeline | null>(null);
+  const isAnimatingRef = useRef(false);
+  const isExpandedRef = useRef(false); // 최신 상태 추적용 ref
 
   const calculateHeight = () => {
     const navEl = navRef.current;
@@ -114,16 +116,29 @@ const CardNav: React.FC<CardNavProps> = ({
 
     tl.to(cardsRef.current, { y: 0, opacity: 1, duration: 0.4, ease, stagger: 0.08 }, '-=0.1');
 
+    // 이벤트 콜백 초기화
+    tl.eventCallback('onComplete', null);
+    tl.eventCallback('onReverseComplete', null);
+
     return tl;
   };
+
+  // isExpanded 상태 변경 시 ref 동기화
+  useEffect(() => {
+    isExpandedRef.current = isExpanded;
+  }, [isExpanded]);
 
   useLayoutEffect(() => {
     const tl = createTimeline();
     tlRef.current = tl;
+    isAnimatingRef.current = false; // 타임라인 재생성 시 애니메이션 상태 초기화
+    // ref도 현재 상태와 동기화
+    isExpandedRef.current = isExpanded;
 
     return () => {
       tl?.kill();
       tlRef.current = null;
+      isAnimatingRef.current = false;
     };
   }, [ease, items]);
 
@@ -176,10 +191,22 @@ const CardNav: React.FC<CardNavProps> = ({
       if (!containerRef.current) return;
       const target = event.target as Node | null;
       if (target && containerRef.current.contains(target)) return;
+      
+      // 애니메이션이 진행 중이면 무시
+      if (isAnimatingRef.current) return;
+      
       const tl = tlRef.current;
       if (!tl) return;
+      
+      // 애니메이션 시작
+      isAnimatingRef.current = true;
       setIsHamburgerOpen(false);
-      tl.eventCallback('onReverseComplete', () => setIsExpanded(false));
+      tl.eventCallback('onReverseComplete', null);
+      tl.eventCallback('onReverseComplete', () => {
+        setIsExpanded(false);
+        isExpandedRef.current = false;
+        isAnimatingRef.current = false;
+      });
       tl.reverse();
     };
 
@@ -191,19 +218,45 @@ const CardNav: React.FC<CardNavProps> = ({
     };
   }, [isExpanded]);
 
-  const toggleMenu = () => {
+  const toggleMenu = useCallback(() => {
+    // 애니메이션이 진행 중이면 무시
+    if (isAnimatingRef.current) {
+      return;
+    }
+
     const tl = tlRef.current;
-    if (!tl) return;
-    if (!isExpanded) {
+    if (!tl) {
+      return;
+    }
+
+    // ref를 사용하여 최신 상태 확인 (클로저 문제 방지)
+    const currentExpanded = isExpandedRef.current;
+
+    // 애니메이션 시작
+    isAnimatingRef.current = true;
+
+    if (!currentExpanded) {
       setIsHamburgerOpen(true);
       setIsExpanded(true);
+      isExpandedRef.current = true;
+      // 이전 콜백 제거 후 새로 설정
+      tl.eventCallback('onComplete', null);
+      tl.eventCallback('onComplete', () => {
+        isAnimatingRef.current = false;
+      });
       tl.play(0);
     } else {
       setIsHamburgerOpen(false);
-      tl.eventCallback('onReverseComplete', () => setIsExpanded(false));
+      // 이전 콜백 제거 후 새로 설정
+      tl.eventCallback('onReverseComplete', null);
+      tl.eventCallback('onReverseComplete', () => {
+        setIsExpanded(false);
+        isExpandedRef.current = false;
+        isAnimatingRef.current = false;
+      });
       tl.reverse();
     }
-  };
+  }, []);
 
   const setCardRef = (i: number) => (el: HTMLDivElement | null) => {
     if (el) cardsRef.current[i] = el;

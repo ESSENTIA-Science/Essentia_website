@@ -29,6 +29,7 @@ export default function ForumPage() {
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const categories = ["공지", "자유", "ICAROS", "Obvium Nihil"];
@@ -98,7 +99,9 @@ export default function ForumPage() {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    if (isSubmitting) return;
     setError(null);
+    setIsSubmitting(true);
     try {
       const res = await fetch("/api/forum", {
         method: "POST",
@@ -113,6 +116,8 @@ export default function ForumPage() {
     } catch (err) {
       const message = err instanceof Error ? err.message : "Unknown error";
       setError(message);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -286,7 +291,7 @@ export default function ForumPage() {
                 required
               />
               <div className={styles.formBtnRow}>
-                <button className={styles.primaryButton} type="submit">
+                <button className={styles.primaryButton} type="submit" disabled={isSubmitting}>
                   등록
                 </button>
                 <p>부적절한 게시글 작성 시 삭제조치 될 수도 있습니다.</p>

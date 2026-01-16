@@ -113,7 +113,9 @@ export async function PATCH(request: Request) {
   }
 
   if (depth1 !== null) {
-    if (member.class !== null && member.class <= 2) {
+    // nextClass가 설정되어 있으면 nextClass를 사용하고, 없으면 현재 class를 사용
+    const effectiveClass = typeof nextClass === "number" ? nextClass : member.class;
+    if (effectiveClass !== null && effectiveClass <= 2) {
       updates.depth_1 = depth1.length > 0 ? depth1 : null;
     } else {
       return NextResponse.json({ error: "Department change not allowed" }, { status: 400 });
@@ -124,10 +126,21 @@ export async function PATCH(request: Request) {
     return NextResponse.json({ ok: true });
   }
 
-  const { error } = await supabase.from("members").update(updates).eq("id", id);
-  if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  const { error: updateError } = await supabase.from("members").update(updates).eq("id", id);
+  if (updateError) {
+    return NextResponse.json({ error: updateError.message }, { status: 500 });
   }
 
-  return NextResponse.json({ ok: true });
+  // 업데이트된 데이터를 다시 조회하여 반환
+  const { data: updatedMember, error: fetchError } = await supabase
+    .from("members")
+    .select("id, name, email, class, provider, depth_1, member_code")
+    .eq("id", id)
+    .maybeSingle();
+
+  if (fetchError) {
+    return NextResponse.json({ error: fetchError.message }, { status: 500 });
+  }
+
+  return NextResponse.json({ ok: true, member: updatedMember });
 }

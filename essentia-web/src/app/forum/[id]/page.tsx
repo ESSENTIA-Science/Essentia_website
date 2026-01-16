@@ -37,6 +37,7 @@ export default function ForumDetailPage({ params }: { params: { id: string } }) 
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
   const [editingCommentValue, setEditingCommentValue] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [isCommentSubmitting, setIsCommentSubmitting] = useState(false);
   const categories = ["자유", "공지", "ICAROS", "Obvium Nihil"];
 
   const loadPost = async () => {
@@ -83,7 +84,9 @@ export default function ForumDetailPage({ params }: { params: { id: string } }) 
 
   const handleCommentSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    if (isCommentSubmitting) return;
     setError(null);
+    setIsCommentSubmitting(true);
     try {
       const res = await fetch(`/api/forum/${params.id}/comments`, {
         method: "POST",
@@ -97,6 +100,8 @@ export default function ForumDetailPage({ params }: { params: { id: string } }) 
     } catch (err) {
       const message = err instanceof Error ? err.message : "Unknown error";
       setError(message);
+    } finally {
+      setIsCommentSubmitting(false);
     }
   };
 
@@ -311,7 +316,7 @@ export default function ForumDetailPage({ params }: { params: { id: string } }) 
               onChange={(event) => setComment(event.target.value)}
               required
             />
-            <button className={styles.primaryButton} type="submit">
+            <button className={styles.primaryButton} type="submit" disabled={isCommentSubmitting}>
               댓글 작성
             </button>
           </form>

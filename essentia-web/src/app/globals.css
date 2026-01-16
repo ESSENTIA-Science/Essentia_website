@@ -7,12 +7,14 @@
   --background: #171717;
   --foreground: #171717;
   --primary-color : #175c6c;
+  color-scheme: light;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #175c6c;
     --foreground: #ededed;
+    color-scheme: light;
   }
 }
 
@@ -52,13 +54,20 @@ a {
   text-decoration: none;
 }
 
-.siteFooterGlobal {
-  padding: 24px 16px 32px;
-  text-align: center;
-  font-size: clamp(12px, 1vw, 16px);
-  color: #e9f0f2;
-  background: transparent;
+input,
+textarea,
+select {
+  color: #111111;
+  background: #ffffff;
+  -webkit-text-fill-color: #111111;
 }
+
+input::placeholder,
+textarea::placeholder {
+  color: #6b7280;
+  opacity: 1;
+}
+
 
 @media (prefers-color-scheme: dark) {
   html {
