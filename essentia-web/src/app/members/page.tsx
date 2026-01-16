@@ -125,9 +125,9 @@ export default function Members() {
     
     // depth1Titles에 있는 부서와 실제 멤버가 있는 부서를 모두 포함
     const allDepth1Names = new Set(depth1Titles);
-    for (const depth1 of map.keys()) {
+    map.forEach((_list, depth1) => {
       allDepth1Names.add(depth1);
-    }
+    });
     
     const groups = Array.from(allDepth1Names)
       .sort()
