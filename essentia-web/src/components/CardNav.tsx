@@ -146,6 +146,9 @@ const CardNav: React.FC<CardNavProps> = ({
     const handleResize = () => {
       if (!tlRef.current) return;
 
+      // Reset animation lock if the timeline is rebuilt during a mobile resize.
+      isAnimatingRef.current = false;
+
       if (isExpanded) {
         const newHeight = calculateHeight();
         gsap.set(navRef.current, { height: newHeight });
@@ -160,6 +163,7 @@ const CardNav: React.FC<CardNavProps> = ({
         tlRef.current.kill();
         const newTl = createTimeline();
         if (newTl) {
+          newTl.progress(0);
           tlRef.current = newTl;
         }
       }
