@@ -100,15 +100,15 @@ export default function ContactPage() {
           <ul className={styles.benefitsList}>
             <li className={styles.benefitItem}>
               <FaCheck className={styles.checkIcon} />
-              <span> </span>
+              <span>자유로운 연구환경</span>
             </li>
             <li className={styles.benefitItem}>
               <FaCheck className={styles.checkIcon} />
-              <span> </span>
+              <span>평가에서 벗어난 순수한 탐구기회</span>
             </li>
             <li className={styles.benefitItem}>
               <FaCheck className={styles.checkIcon} />
-              <span> </span>
+              <span>분야를 가리지않는 기회제공</span>
             </li>
           </ul>
           {(status !== "authenticated" || canApply) ? (

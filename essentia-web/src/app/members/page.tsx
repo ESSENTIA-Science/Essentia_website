@@ -42,19 +42,10 @@ export default function Members() {
       const membersData = await membersRes.json();
       const orgData = await orgRes.json();
       
-      const totalCount = membersRes.headers.get('X-Total-Count');
-      const filteredCount = membersRes.headers.get('X-Filtered-Count');
-      
-      console.log('[Members] Load time:', new Date().toISOString());
-      console.log('[Members] Response headers - Total:', totalCount, 'Filtered:', filteredCount);
-      console.log('[Members] Received members count:', Array.isArray(membersData) ? membersData.length : 0);
-      console.log('[Members] Class 2 members:', Array.isArray(membersData) ? membersData.filter((m: member) => m.class === 2).length : 0);
-      console.log('[Members] Class <= 1 members:', Array.isArray(membersData) ? membersData.filter((m: member) => m.class <= 1).length : 0);
-      console.log('[Members] Sample class=2 members:', Array.isArray(membersData) ? membersData.filter((m: member) => m.class === 2).slice(0, 5) : []);
-      
       if (!membersRes.ok) throw new Error(membersData?.error ?? 'Failed to load members');
       if (!orgRes.ok) throw new Error(orgData?.error ?? 'Failed to load organizations');
       setMembers(membersData ?? []);
+      console.log(members)
       setOrgs(orgData ?? []);
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Unknown error';

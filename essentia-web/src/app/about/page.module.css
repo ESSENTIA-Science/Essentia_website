@@ -10,6 +10,7 @@
   font-family: var(--font-pretendard), "Noto Serif", serif;
   word-break: keep-all;
   padding: 5vh 10vw ;
+  background-color: #175c6c;
 }
 
 .aboutContent {
