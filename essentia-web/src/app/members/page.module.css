@@ -15,6 +15,11 @@
   background-color: #175c6c;
 }
 
+:global(body),
+:global(html) {
+  background-color: #175c6c;
+}
+
 .memberGrid {
     margin-top: 15vh;
     display: grid;
