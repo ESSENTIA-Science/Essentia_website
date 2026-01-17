@@ -15,6 +15,18 @@ export default function Login() {
         try {
             setError(null);
             setLoadingProvider(provider);
+            if (provider === 'google') {
+                const response = await signIn(provider, {
+                    callbackUrl: "/onboarding",
+                    redirect: false,
+                });
+                const signInUrl = response?.url;
+                if (signInUrl) {
+                    window.open(signInUrl, "_blank");
+                }
+                setLoadingProvider(null);
+                return;
+            }
             await signIn(provider, { callbackUrl: "/onboarding" });
         } catch (err) {
             const message = err instanceof Error ? err.message : '로그인에 실패했습니다.';

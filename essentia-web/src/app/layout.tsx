@@ -23,7 +23,7 @@ const pretendard = localFont({
 
 export const metadata: Metadata = {
   title: "ESSENTIA Science",
-  description: "국가와 인류를 위한 학문인 과학과 수학을 중시하며 연구원들과 인재들을 위한 비공인 학생 과학회.",
+  description: "ESSENTIA 과학회는 시험 성적으로는 드러나지 않는 과학적 열정과 잠재력을 가진 학생들을 위한 비공인 과학회입니다. 학교에서 경험하기 어려운 깊이 있는 탐구와 교류의 기회를 통해, 진정한 과학 인재로 성장할 수 있는 환경을 만드는 것을 목표로 합니다",
   icons: {
     icon: "./icon.svg"
   }
