@@ -88,6 +88,11 @@
   flex-shrink: 0;
 }
 
+.moneyIcon {
+  font-size: 32px;
+  color: #06af1d;
+  flex-shrink: 0;
+}
 .channelContent {
   display: flex;
   flex-direction: column;

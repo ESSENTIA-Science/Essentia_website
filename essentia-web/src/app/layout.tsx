@@ -39,7 +39,7 @@ export default function RootLayout({
       <body className={`${pretendard.variable} ${pretendard.variable}`}>
         <AppSessionProvider>
           <NavBar />
-          {children}
+          <div className="app-content">{children}</div>
         </AppSessionProvider>
       </body>
     </html>

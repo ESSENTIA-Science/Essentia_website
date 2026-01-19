@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { GoMail } from "react-icons/go";
-import { FaInstagram, FaYoutube, FaCheck } from "react-icons/fa";
+import { FaInstagram, FaYoutube, FaCheck, FaMoneyCheckAlt } from "react-icons/fa";
 import styles from "./page.module.css";
 
 type Member = {
@@ -86,6 +86,17 @@ export default function ContactPage() {
               <div className={styles.channelContent}>
                 <div className={styles.channelLabel}>유튜브 채널</div>
                 <div className={styles.channelValue}>ESSENTIA Science</div>
+              </div>
+            </a>
+            <a
+              className={styles.channelItem}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <FaMoneyCheckAlt className={styles.moneyIcon} />
+              <div className={styles.channelContent}>
+                <div className={styles.channelLabel}>후원 문의</div>
+                <div className={styles.channelValue}>토스뱅크 1001-5934-8033</div>
               </div>
             </a>
           </div>
