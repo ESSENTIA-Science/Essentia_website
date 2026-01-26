@@ -21,7 +21,8 @@
 
 .intro {
   display: grid;
-  height: 100%;
+  height: auto;
+  min-height: auto;
   justify-self: center;
   gap: 64px;
   max-width: clamp(200px, 50vw, 100vw);
@@ -70,7 +71,9 @@
 
 
 .organization{
-  height: 100%;
+  height: auto;
+  min-height: auto;
+  align-content: start;
 }
 
 .nodeBox{
