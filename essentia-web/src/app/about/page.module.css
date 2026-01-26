@@ -6,7 +6,9 @@
   --button-primary-hover: #383838;
   --button-secondary-hover: #f2f2f2;
 
+  display: grid;
   justify-items: center;
+  align-content: start;
   font-family: var(--font-pretendard), "Noto Serif", serif;
   word-break: keep-all;
   padding: 5vh 10vw ;
@@ -23,6 +25,9 @@
   justify-self: center;
   gap: 64px;
   max-width: clamp(200px, 50vw, 100vw);
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
   margin-top: 90px;
   margin-bottom: 20px;
   padding: 0;

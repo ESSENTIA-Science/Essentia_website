@@ -45,8 +45,8 @@ export default function Members() {
       if (!membersRes.ok) throw new Error(membersData?.error ?? 'Failed to load members');
       if (!orgRes.ok) throw new Error(orgData?.error ?? 'Failed to load organizations');
       setMembers(membersData ?? []);
-      console.log(members)
-      setOrgs(orgData ?? []);
+      console.log(members);
+      setOrgs(orgData.organizations ?? []);
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Unknown error';
       console.error('[Members] Failed to load data', message);

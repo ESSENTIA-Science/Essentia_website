@@ -86,6 +86,7 @@ export default function MyPage() {
             setMembers(membersData.members ?? []);
             setOrgs(orgData.organizations ?? []);
             setMemberPage(1);
+            window.dispatchEvent(new Event('orgs:updated'));
         } catch (err) {
             const message = err instanceof Error ? err.message : 'Unknown error';
             setAdminError(message);
@@ -169,6 +170,7 @@ export default function MyPage() {
             if (!res.ok) throw new Error(data?.error ?? 'Failed to create organization');
             setOrgForm({ name: '', parent_id: '', depth: 1 });
             await loadAdminData();
+            window.dispatchEvent(new Event('orgs:updated'));
         } catch (err) {
             const message = err instanceof Error ? err.message : 'Unknown error';
             setAdminError(message);
@@ -183,6 +185,7 @@ export default function MyPage() {
             const data = await res.json();
             if (!res.ok) throw new Error(data?.error ?? 'Failed to delete organization');
             await loadAdminData();
+            window.dispatchEvent(new Event('orgs:updated'));
         } catch (err) {
             const message = err instanceof Error ? err.message : 'Unknown error';
             setAdminError(message);

@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
 export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+export const fetchCache = 'force-no-store';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -47,15 +49,6 @@ export async function GET(request: Request) {
     .filter(m => m.class === 2)
     .slice(0, 10)
     .map(m => ({ id: m.id, name: m.name, class: m.class, depth_1: m.depth_1 }));
-
-  console.log('[API /members] Request time:', new Date().toISOString());
-  console.log('[API /members] Total members from DB:', allMembers.length);
-  console.log('[API /members] Filtered members (class <= 2):', filteredData.length);
-  console.log('[API /members] Recent class=2 members:', recentMembers);
-  console.log('[API /members] Excluded members:', allMembers
-    .filter(m => m.class === null || m.class === undefined || m.class > 2)
-    .slice(0, 10)
-    .map(m => ({ id: m.id, name: m.name, class: m.class })));
 
   return NextResponse.json(filteredData, {
     headers: {

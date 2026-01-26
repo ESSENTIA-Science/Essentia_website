@@ -26,10 +26,7 @@ export default function OrganizationSection() {
   const fetchOrgs = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/organizations?ts=${Date.now()}`, {
-        cache: 'no-store',
-        credentials: 'omit',
-      });
+      const res = await fetch(`/api/organizations?ts=${Date.now()}`, { cache: 'no-store' })
       const data = await res.json();
 
       if (!res.ok) {
@@ -37,7 +34,7 @@ export default function OrganizationSection() {
       }
 
       setError(null);
-      setOrgs(data);
+      setOrgs(data.organizations ?? []);
       console.log('[OrganizationSection] organizations', data);
     } catch (err) {
       const msg = err instanceof Error ? err.message : 'Unknown error';
@@ -57,9 +54,14 @@ export default function OrganizationSection() {
     };
     window.addEventListener('focus', handleFocus);
     document.addEventListener('visibilitychange', handleFocus);
+    const handleOrgUpdate = () => {
+      fetchOrgs();
+    };
+    window.addEventListener('orgs:updated', handleOrgUpdate);
     return () => {
       window.removeEventListener('focus', handleFocus);
       document.removeEventListener('visibilitychange', handleFocus);
+      window.removeEventListener('orgs:updated', handleOrgUpdate);
     };
   }, [fetchOrgs]);
   
