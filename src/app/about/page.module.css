@@ -1,0 +1,101 @@
+.page {
+  --gray-rgb: 0, 0, 0;
+  --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
+  --gray-alpha-100: rgba(var(--gray-rgb), 0.05);
+
+  --button-primary-hover: #383838;
+  --button-secondary-hover: #f2f2f2;
+
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  font-family: var(--font-pretendard), "Noto Serif", serif;
+  word-break: keep-all;
+  padding: 5vh 10vw ;
+  background-color: #175c6c;
+}
+
+.aboutContent {
+    width: 100%;
+}
+
+.intro {
+  display: grid;
+  height: auto;
+  min-height: auto;
+  justify-self: center;
+  gap: 64px;
+  max-width: clamp(200px, 50vw, 100vw);
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 90px;
+  margin-bottom: 20px;
+  padding: 0;
+  color: #ffffff;
+}
+
+.introBlock {
+  display: grid;
+  gap: 8px;
+  animation: introFadeIn 0.8s ease both;
+}
+
+.introBlock#org {
+  margin-top: 60px;
+}
+
+.introTitle {
+  margin: 0;
+  font-size: clamp(30px, 2.6vw, 40px);
+  font-weight: 500;
+  font-family: "Noto Serif";
+  letter-spacing: 0.02em;
+  text-align: center;
+}
+
+.introHeading {
+  margin: 16px 0 0;
+  font-size: clamp(20px, 2vw, 26px);
+  text-align: center;
+}
+
+.introText {
+  margin: 0;
+  font-size: clamp(17px, 1.5vw, 30px);
+  font-weight: 100;
+  line-height: 1.75;
+  color: #ffffff;
+  text-align: center;
+}
+
+
+.organization{
+  height: auto;
+  min-height: auto;
+  align-content: start;
+}
+
+.nodeBox{
+  justify-self: center;
+  align-self: center;
+  background-color: #2c6674ff;
+  border: 0.5px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: clamp(300px, 30vw, 2000px);
+  max-width: clamp(700px, 80vw, 3000px);
+  overflow: hidden;
+}
+
+@keyframes introFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

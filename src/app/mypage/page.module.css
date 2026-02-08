@@ -1,0 +1,463 @@
+.page {
+  --gray-rgb: 0, 0, 0;
+  --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
+  --gray-alpha-100: rgba(var(--gray-rgb), 0.05);
+
+  --button-primary-hover: #383838;
+  --button-secondary-hover: #f2f2f2;
+
+  display: grid;
+  place-items: center;
+  min-height: 100svh;
+  font-family: var(--font-pretendard), "Noto Serif", serif;
+  word-break: keep-all;
+  padding: 0 10vw ;
+  color: #000;
+  margin-top: 160px;
+  margin-bottom: 60px;
+  background-color: #175c6c;
+}
+
+.card {
+  width: min(720px, 100%);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+  padding: 32px;
+  display: grid;
+  gap: 16px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+  margin-bottom: 30px;
+}
+
+.adminSection {
+  width: min(960px, 100%);
+  height: 100%;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+  padding: 32px;
+  display: grid;
+  gap: 20px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+  margin-top: 60px ;
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: 22px;
+}
+
+.adminList {
+  display: grid;
+  gap: 12px;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pageLabel {
+  font-size: 14px;
+}
+
+.filterRow {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 140px minmax(0, 1fr);
+  align-items: center;
+}
+
+.filterRowSingle {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+}
+
+.adminCard {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 90px minmax(260px, 1.6fr) repeat(3, minmax(140px, 1fr));
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: #fff;
+}
+
+.adminApplicantCard {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: minmax(140px, 1fr) minmax(240px, 1.4fr) minmax(200px, 1fr);
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: #fff;
+}
+
+.adminApplicantDetails {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(3, minmax(220px, 1fr));
+}
+
+.adminApplicantDetail {
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: #fff;
+}
+
+.adminApplicantActions {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.adminApplicantMenu {
+  width: 100%;
+  display: grid;
+  gap: 12px;
+  align-items: center;
+  grid-template-columns: auto minmax(220px, 1fr) auto auto minmax(160px, 1fr);
+}
+
+.helperInline {
+  font-size: 14px;
+  color: #000;
+}
+
+.applicantSection {
+  width: min(1120px, 100%);
+  height: 100%;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+  padding: 32px;
+  display: grid;
+  gap: 20px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+  margin-top: 60px ;
+}
+
+.applicantCard {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(3, minmax(220px, 1fr));
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: #fff;
+}
+
+.interviewCard {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(3, minmax(220px, 1fr));
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: #fff;
+}
+
+.interviewField {
+  display: grid;
+  gap: 6px;
+}
+
+.interviewActions {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.dateInput {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  font-size: 14px;
+  background: #fff;
+  color: #000;
+}
+
+.applicantDocs {
+  display: grid;
+  gap: 12px;
+}
+
+.applicantDoc {
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: #fff;
+}
+
+.docContent {
+  margin: 6px 0 0;
+  font-size: 15px;
+  font-weight: 500;
+  white-space: pre-wrap;
+}
+
+.title {
+  margin: 0;
+  font-size: 30px;
+}
+
+.subtitle {
+  margin: 0;
+  color: #000;
+}
+
+.helper {
+  margin: 0;
+  font-size: 14px;
+  color: #000;
+}
+
+.error {
+  margin: 0;
+  font-size: 14px;
+  color: #000;
+}
+
+.infoGrid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-areas:
+    "name email birth"
+    "sex school ."
+    "dept class logout";
+}
+
+.infoName {
+  grid-area: name;
+}
+
+.infoEmail {
+  grid-area: email;
+}
+
+.infoBirth {
+  grid-area: birth;
+}
+
+.infoSex {
+  grid-area: sex;
+}
+
+.infoSchool {
+  grid-area: school;
+}
+
+.infoDept {
+  grid-area: dept;
+}
+
+.infoClass {
+  grid-area: class;
+}
+
+.logoutButton {
+  grid-area: logout;
+  justify-self: start;
+  align-self: end;
+}
+
+.label {
+  margin: 0;
+  font-size: 12px;
+  color: #000;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.value {
+  margin: 4px 0 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.form {
+  display: grid;
+  gap: 14px;
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+  font-size: 14px;
+  color: #000;
+}
+
+.input {
+  border-radius: 7px;
+  color: #f2f2f2;
+  padding: 7px;
+}
+
+.field input,
+.field select {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  font-size: 15px;
+  background: #fff;
+}
+
+.primaryButton {
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: none;
+  background: #155462;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.primaryButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.secondaryButton {
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid #000;
+  background: transparent;
+  color: #000;
+  font-weight: 600;
+  cursor: pointer;
+  justify-self: start;
+}
+
+.orgForm {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  align-items: center;
+}
+
+.orgList {
+  display: grid;
+  gap: 8px;
+}
+
+.orgRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: #fff;
+}
+
+.select {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  font-size: 14px;
+  background: #fff;
+}
+
+@media (max-width: 1200px) {
+  .adminSection {
+    width: min(840px, 100%);
+  }
+
+  .adminCard {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .adminApplicantCard {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .adminApplicantDetails {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .adminApplicantMenu {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .applicantSection {
+    width: min(980px, 100%);
+  }
+}
+
+@media (max-width: 900px) {
+  .page {
+    padding: 0 6vw;
+    margin-top: 120px;
+  }
+
+  .adminSection,
+  .applicantSection {
+    padding: 24px;
+  }
+
+  .adminCard,
+  .adminApplicantCard,
+  .applicantCard,
+  .interviewCard {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .adminApplicantDetails {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .page {
+    padding: 0 4vw;
+    margin-top: 96px;
+  }
+
+  .card,
+  .adminSection,
+  .applicantSection {
+    padding: 20px;
+  }
+
+  .infoGrid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "name"
+      "email"
+      "birth"
+      "sex"
+      "school"
+      "dept"
+      "class"
+      "logout";
+  }
+
+  .logoutButton {
+    justify-self: stretch;
+  }
+
+  .filterRow {
+    grid-template-columns: 1fr;
+  }
+
+  .orgForm {
+    grid-template-columns: 1fr;
+  }
+
+  .orgRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}

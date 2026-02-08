@@ -1,0 +1,148 @@
+.page {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 12vh 10vw;
+  font-family: var(--font-pretendard), "Noto Serif", serif;
+  color: #000;
+}
+
+.card {
+  width: min(640px, 100%);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+  padding: 32px;
+  display: grid;
+  gap: 16px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+}
+
+.title {
+  margin: 0;
+  font-size: 28px;
+}
+
+.subtitle {
+  margin: 0;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.form {
+  display: grid;
+  gap: 16px;
+}
+
+.pledgeBox {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  padding: 16px;
+  background: #fff;
+  display: grid;
+  gap: 12px;
+}
+
+.pledgeTitle {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.pledgeSection {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.pledgeText {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.pledgeDetails {
+  border-top: 1px dashed rgba(0, 0, 0, 0.15);
+  padding-top: 10px;
+}
+
+.pledgeSummary {
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.pledgeDetailBody {
+  margin-top: 10px;
+  display: grid;
+  gap: 10px;
+}
+
+.pledgeSubhead {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.pledgeList {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 6px;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.pledgeListNested {
+  margin-top: 6px;
+  padding-left: 18px;
+  display: grid;
+  gap: 4px;
+  font-size: 14px;
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.field input,
+.field textarea {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  font-size: 15px;
+  font-family: inherit;
+}
+
+.field textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.checkboxRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.primaryButton {
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: none;
+  background: #155462;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.primaryButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.error {
+  margin: 0;
+  color: #b42318;
+}

@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #175c6c;
+  --foreground: #171717;
+  --primary-color : #175c6c;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #175c6c;
+    --foreground: #ededed;
+    color-scheme: light;
+  }
+}
+
+html {
+  overflow-x: hidden;
+  scroll-behavior: smooth; /* 단, JS 스크롤과 섞이면 꺼야 할 수도 있음 */
+  background-color: var(--background);
+}
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  background-color: var(--background);
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-pretendard), "Noto Serif", serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.app-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.app-content > * {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+section {
+  width: 100%;
+  height: 100vh;
+  display: grid;
+}
+
+
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+input,
+textarea,
+select {
+  color: #111111;
+  background: #ffffff;
+  -webkit-text-fill-color: #111111;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #6b7280;
+  opacity: 1;
+}
+
+
+@media (prefers-color-scheme: dark) {
+  html {
+  overflow-x: hidden;
+    color-scheme: dark;
+  }
+}

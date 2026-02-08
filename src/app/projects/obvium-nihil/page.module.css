@@ -1,0 +1,60 @@
+.page {
+  padding: 12vh 10vw 12vh;
+  font-family: var(--font-pretendard), "Noto Serif", serif;
+  color: #101010;
+  display: grid;
+  gap: 24px;
+  background-color: #175c6c;
+}
+
+.header {
+  display: grid;
+  gap: 8px;
+}
+
+.kicker {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 700;
+  color: #fdfdfd;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 24px;
+}
+
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  border-radius: 18px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  height: fit-content;
+}
+
+.body {
+  margin: 0;
+  line-height: 1.6;
+  color: rgba(0, 0, 0, 0.75);
+  height: fit-content;
+}

@@ -1,0 +1,121 @@
+.page {
+  padding: 12vh 12vw 12vh;
+  font-family: var(--font-pretendard), "Noto Serif", serif;
+  color: #101010;
+  display: grid;
+  gap: 32px;
+  background-color: #175c6c;
+}
+
+.header {
+  display: grid;
+  gap: 10px;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 200;
+  color: #fdfdfd;
+  height: fit-content;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.65);
+  max-width: 640px;
+  color: #fdfdfd;
+  height: fit-content;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 240px;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  border-radius: 18px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.cardFade {
+  animation: cardFadeIn 0.8s ease forwards;
+}
+
+@keyframes cardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+  border-color: rgba(0, 0, 0, 0.18);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  grid-column: 1;
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.cardTag {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.cardDesc {
+  margin: 0;
+  margin-right: 60px;
+  color: rgba(0, 0, 0, 0.7);
+  line-height: 1.5;
+  grid-column: 1;
+}
+
+.cardImage {
+  border-radius: 14px;
+  object-fit: cover;
+  width: 100%;
+  height: auto;
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+
+@media (max-width: 900px) {
+  .card {
+    grid-template-columns: 1fr;
+  }
+
+  .cardImage {
+    grid-column: 1;
+    grid-row: auto;
+    height: 180px;
+  }
+}

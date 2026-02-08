@@ -1,0 +1,12 @@
+.loadingPage {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-pretendard), "Noto Serif", serif;
+  color: #000;
+}
+
+.message {
+  font-size: 18px;
+  font-weight: 600;
+}

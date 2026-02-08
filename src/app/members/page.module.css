@@ -1,0 +1,82 @@
+.page {
+  --gray-rgb: 0, 0, 0;
+  --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
+  --gray-alpha-100: rgba(var(--gray-rgb), 0.05);
+
+  --button-primary-hover: #383838;
+  --button-secondary-hover: #f2f2f2;
+
+  justify-items: center;
+  min-height: 100svh;
+  font-family: var(--font-pretendard), "Noto Serif", serif;
+  word-break: keep-all;
+  padding: 0 10vw ;
+  margin-bottom: 60px;
+  background-color: #175c6c;
+}
+
+
+.memberGrid {
+    margin-top: 15vh;
+    display: grid;
+    gap: 56px;
+    width: 100%;
+}
+
+.executiveGrid,
+.depthGroup {
+  display: grid;
+  gap: 20px;
+}
+
+.title {
+  font-size: clamp(18px, 2.2vw, 28px);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #f2f2f2;
+}
+
+.memberList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 300px);
+  gap: 18px;
+  width: 100%;
+  align-items: stretch;
+  justify-content: start;
+}
+
+.memberCard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  width: 300px;
+}
+
+.avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 10px;
+  object-fit: cover;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.info {
+  display: grid;
+  gap: 4px;
+}
+
+.name {
+  font-size: 18px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.school {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.65);
+}
