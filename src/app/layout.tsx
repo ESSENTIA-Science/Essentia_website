@@ -24,9 +24,15 @@ const pretendard = localFont({
 export const metadata: Metadata = {
   title: "ESSENTIA Science",
   description: "ESSENTIA 과학회는 시험 성적으로는 드러나지 않는 과학적 열정과 잠재력을 가진 학생들을 위한 비공인 과학회입니다. 학교에서 경험하기 어려운 깊이 있는 탐구와 교류의 기회를 통해, 진정한 과학 인재로 성장할 수 있는 환경을 만드는 것을 목표로 합니다",
-  themeColor: "transparent",
+  themeColor: [
+  { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+  { media: "(prefers-color-scheme: dark)", color: "#000000" },
+  ],
   icons: {
-    icon: "./icon.svg"
+      icon: "/logo.png",
+  },
+  openGraph: {
+    images: ["/og.png"],
   }
 };
 
