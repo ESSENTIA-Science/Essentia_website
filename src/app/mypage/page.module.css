@@ -295,23 +295,25 @@
   width: fit-content;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 6px;
   align-items: flex-start;
   justify-content: flex-start;
   align-content: start;
 }
 
 .profileImage {
-  width: 180px;
-  height: 180px;
-  border-radius: 16px;
+  width: 120px;
+  height: 120px;
+  border-radius: 12px;
   object-fit: cover;
   border: 1px solid rgba(0, 0, 0, 0.12);
   background: #fff;
 }
 
 .profileimgButton{
-  width: 180px;
+  width: 120px;
+  padding: 8px 10px;
+  font-size: 12px;
 }
 
 .hiddenFileInput {

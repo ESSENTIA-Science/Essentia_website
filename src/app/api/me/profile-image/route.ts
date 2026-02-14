@@ -96,3 +96,54 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }
+
+export async function DELETE() {
+  try {
+    const session = await getServerSession(authOptions);
+    const email = session?.user?.email ?? null;
+
+    if (!session || !email) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const { data, error } = await supabase
+      .from("user")
+      .select("members(member_code)")
+      .eq("email", email)
+      .maybeSingle();
+
+    if (error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+
+    const memberRelation = data?.members as
+      | { member_code: string | number | null }
+      | { member_code: string | number | null }[]
+      | null
+      | undefined;
+    const member = normalizeSingle(memberRelation);
+    const rawMemberCode = member?.member_code;
+    const memberCode =
+      typeof rawMemberCode === "string"
+        ? rawMemberCode.trim()
+        : rawMemberCode == null
+          ? ""
+          : String(rawMemberCode).trim();
+
+    if (!memberCode) {
+      return NextResponse.json({ error: "Member code not found" }, { status: 403 });
+    }
+
+    const path = `${memberCode}.webp`;
+    const { error: removeError } = await supabase.storage.from(PROFILE_BUCKET).remove([path]);
+
+    if (removeError) {
+      return NextResponse.json({ error: removeError.message }, { status: 500 });
+    }
+
+    return NextResponse.json({ ok: true });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Unexpected server error";
+    return NextResponse.json({ error: message }, { status: 500 });
+  }
+}

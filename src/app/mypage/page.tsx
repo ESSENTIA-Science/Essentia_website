@@ -33,6 +33,7 @@ export default function MyPage() {
     const [noticeFeedback, setNoticeFeedback] = useState<Record<string, string>>({});
     const [adminInterviewTimes, setAdminInterviewTimes] = useState<Record<string, string>>({});
     const [profileUploading, setProfileUploading] = useState(false);
+    const [profileResetting, setProfileResetting] = useState(false);
     const [profileUploadError, setProfileUploadError] = useState<string | null>(null);
     const [profileImageVersion, setProfileImageVersion] = useState(() => Date.now());
     const [profileImageFailed, setProfileImageFailed] = useState(false);
@@ -265,6 +266,32 @@ export default function MyPage() {
         } finally {
             setProfileUploading(false);
             event.target.value = "";
+        }
+    };
+
+    const handleResetProfileImage = async () => {
+        if (profileResetting) return;
+        if (!user?.members?.member_code) return;
+
+        setProfileUploadError(null);
+        setProfileResetting(true);
+
+        try {
+            const response = await fetch("/api/me/profile-image", {
+                method: "DELETE",
+            });
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(data?.error ?? "기본 이미지로 되돌리기에 실패했습니다.");
+            }
+
+            setProfileImageFailed(true);
+            setProfileImageVersion(Date.now());
+        } catch (err) {
+            const message = err instanceof Error ? err.message : "Unknown error";
+            setProfileUploadError(message);
+        } finally {
+            setProfileResetting(false);
         }
     };
 
@@ -675,9 +702,17 @@ export default function MyPage() {
                                 className={styles.secondaryButton + " " + styles.profileimgButton}
                                 type="button"
                                 onClick={openProfileFilePicker}
-                                disabled={profileUploading || !user.members?.member_code}
+                                disabled={profileUploading || profileResetting || !user.members?.member_code}
                             >
                                 {profileUploading ? "업로드 중..." : "프로필 사진 변경"}
+                            </button>
+                            <button
+                                className={styles.secondaryButton + " " + styles.profileimgButton}
+                                type="button"
+                                onClick={handleResetProfileImage}
+                                disabled={profileUploading || profileResetting || !user.members?.member_code}
+                            >
+                                {profileResetting ? "처리 중..." : "기본으로 돌아가기"}
                             </button>
                             {!user.members?.member_code && (
                                 <p className={styles.helper}>회원 코드가 없어 업로드할 수 없습니다.</p>
