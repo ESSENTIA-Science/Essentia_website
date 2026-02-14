@@ -327,4 +327,20 @@
   .select {
     font-size: 14px;
   }
+
+  .toolbar {
+    flex-wrap: wrap;
+    row-gap: 4px;
+    max-width: 100%;
+    padding: 6px;
+  }
+
+  .toolbar button {
+    font-size: 12px;
+    padding: 5px 6px;
+  }
+
+  .divider {
+    display: none;
+  }
 }
