@@ -656,6 +656,7 @@ export default function MyPage() {
                         </>
                         )}
                         </div>
+                        {user.members && (
                         <div className={styles.profileEditor}>
                             <img
                                 className={styles.profileImage}
@@ -683,6 +684,7 @@ export default function MyPage() {
                             )}
                             {profileUploadError && <p className={styles.error}>{profileUploadError}</p>}
                         </div>
+                        )}
                     </div>
                 ) : (
                     <p className={styles.helper}>기본 정보를 확인하는 중입니다.</p>

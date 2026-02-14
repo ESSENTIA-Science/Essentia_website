@@ -292,7 +292,7 @@
 }
 
 .profileEditor {
-  width: 100%;
+  width: fit-content;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -319,6 +319,7 @@
 }
 
 .logoutButton {
+  margin-top: 48px;
   justify-self: start;
 }
 
@@ -491,6 +492,11 @@
   .adminSection,
   .applicantSection {
     padding: 20px;
+  }
+
+  .card {
+    width: 90vw;
+    max-width: 90vw;
   }
 
   .infoGrid {
