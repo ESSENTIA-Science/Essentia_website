@@ -32,8 +32,13 @@ export const metadata: Metadata = {
       icon: "/logo.png",
   },
   openGraph: {
+    title: "ESSENTIA Science",
+    description:
+      "시험 성적만이 아닌 과학적 열정으로 성장하는 학생 과학회",
     images: ["/og.png"],
-  }
+    type: "website",
+    locale: "ko_KR",
+  },
 };
 
 export default function RootLayout({

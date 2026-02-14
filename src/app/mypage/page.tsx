@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import LoadingScreen from '@/components/LoadingScreen';
@@ -8,6 +8,7 @@ import styles from "./page.module.css";
 import ApplicantSection from "./ApplicantSection";
 import AdminSection from "./AdminSection";
 import type { ApplicantInfo, ApplicantProgress, MemberRole, Org, User } from "./types";
+import profileImage from "../asset/profile.webp";
 
 export default function MyPage() {
     const { status } = useSession();
@@ -31,6 +32,11 @@ export default function MyPage() {
     const [noticeSendingId, setNoticeSendingId] = useState<string | null>(null);
     const [noticeFeedback, setNoticeFeedback] = useState<Record<string, string>>({});
     const [adminInterviewTimes, setAdminInterviewTimes] = useState<Record<string, string>>({});
+    const [profileUploading, setProfileUploading] = useState(false);
+    const [profileUploadError, setProfileUploadError] = useState<string | null>(null);
+    const [profileImageVersion, setProfileImageVersion] = useState(() => Date.now());
+    const [profileImageFailed, setProfileImageFailed] = useState(false);
+    const profileInputRef = useRef<HTMLInputElement | null>(null);
 
     const loadMember = async () => {
         if (loading) return;
@@ -108,6 +114,11 @@ export default function MyPage() {
     ]);
 
     useEffect(() => {
+        setProfileImageFailed(false);
+        setProfileUploadError(null);
+    }, [user?.members?.member_code]);
+
+    useEffect(() => {
         if (members.length === 0) return;
         const next: Record<string, string> = {};
         members.forEach((item) => {
@@ -148,6 +159,114 @@ export default function MyPage() {
         if (Number.isNaN(date.getTime())) return null;
         return date.toISOString();
     }
+
+    const getProfileImageUrl = (memberCode: string | null | undefined) => {
+        const baseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+        if (!baseUrl || !memberCode) {
+            return profileImage.src;
+        }
+        return `${baseUrl}/storage/v1/object/public/profile_img/${memberCode}.webp?v=${profileImageVersion}`;
+    };
+
+    const convertImageToWebp = (file: File) =>
+        new Promise<File>((resolve, reject) => {
+            const objectUrl = URL.createObjectURL(file);
+            const image = new Image();
+
+            image.onload = () => {
+                URL.revokeObjectURL(objectUrl);
+                const canvas = document.createElement("canvas");
+                canvas.width = image.naturalWidth;
+                canvas.height = image.naturalHeight;
+
+                const context = canvas.getContext("2d");
+                if (!context) {
+                    reject(new Error("Failed to process image"));
+                    return;
+                }
+
+                context.drawImage(image, 0, 0);
+                canvas.toBlob(
+                    (blob) => {
+                        if (!blob) {
+                            reject(new Error("Failed to convert image to webp"));
+                            return;
+                        }
+
+                        resolve(
+                            new File([blob], "profile.webp", {
+                                type: "image/webp",
+                                lastModified: Date.now(),
+                            })
+                        );
+                    },
+                    "image/webp",
+                    0.92
+                );
+            };
+
+            image.onerror = () => {
+                URL.revokeObjectURL(objectUrl);
+                reject(new Error("Failed to load selected image"));
+            };
+
+            image.src = objectUrl;
+        });
+
+    const openProfileFilePicker = () => {
+        if (profileUploading) return;
+        profileInputRef.current?.click();
+    };
+
+    const handleProfileImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (!file) return;
+
+        if (!file.type.startsWith("image/")) {
+            setProfileUploadError("이미지 파일만 업로드할 수 있습니다.");
+            event.target.value = "";
+            return;
+        }
+
+        if (file.size > 10 * 1024 * 1024) {
+            setProfileUploadError("이미지 용량은 10MB 이하여야 합니다.");
+            event.target.value = "";
+            return;
+        }
+
+        if (!user?.members?.member_code) {
+            setProfileUploadError("회원 코드가 없어 프로필 이미지를 업로드할 수 없습니다.");
+            event.target.value = "";
+            return;
+        }
+
+        setProfileUploadError(null);
+        setProfileUploading(true);
+
+        try {
+            const webpFile = await convertImageToWebp(file);
+            const payload = new FormData();
+            payload.append("file", webpFile);
+
+            const response = await fetch("/api/me/profile-image", {
+                method: "POST",
+                body: payload,
+            });
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(data?.error ?? "프로필 이미지 업로드에 실패했습니다.");
+            }
+
+            setProfileImageFailed(false);
+            setProfileImageVersion(Date.now());
+        } catch (err) {
+            const message = err instanceof Error ? err.message : "Unknown error";
+            setProfileUploadError(message);
+        } finally {
+            setProfileUploading(false);
+            event.target.value = "";
+        }
+    };
 
     const normalizeApplicantStatus = (value: string | null) => {
         if (!value) return null;
@@ -490,7 +609,8 @@ export default function MyPage() {
                 {error && <p className={styles.error}>{error}</p>}
                 {loading && <p className={styles.helper}>처리 중...</p>}
                 {user ? (
-                    <div className={styles.infoGrid}>
+                    <div className={styles.cardBody}>
+                        <div className={styles.infoGrid}>
                         <div className={styles.infoName}>
                             <p className={styles.label}>이름</p>
                             <p className={styles.value}>{user.name}</p>
@@ -511,23 +631,58 @@ export default function MyPage() {
                             <p className={styles.label}>학교</p>
                             <p className={styles.value}>{user.school ?? '-'}</p>
                         </div>
-                        <div className={styles.infoDept}>
-                            <p className={styles.label}>소속</p>
-                            <p className={styles.value}>{user.members?.org ?? '-'}</p>
+                        <div className={styles.infoDumy}>
+                            <p className={styles.label}> </p>
+                            <p className={styles.value}> </p>
                         </div>
-                        <div className={styles.infoClass}>
+                        {user.members && (
+                        <>
+                            <div className={styles.infoDept}>
+                                <p className={styles.label}>소속</p>
+                                <p className={styles.value}>{user.members?.org ?? '-'}</p>
+                            </div>
+                            <div className={styles.infoClass}>
                                 <p className={styles.label}>등급</p>
                                 <p className={styles.value}>
-                                {getClassLabel(user.members?.president)}
+                                    {getClassLabel(user.members?.president)}
                                 </p>
                             </div>
-                        <button
-                            className={styles.secondaryButton + " " + styles.logoutButton}
-                            type="button"
-                            onClick={() => signOut({ callbackUrl: "/" })}
-                        >
-                            로그아웃
-                        </button>
+                            <div className={styles.infoCode}>
+                                <p className={styles.label}>회원 번호</p>
+                                <p className={styles.value}>
+                                        {user.members?.member_code}
+                                </p>
+                            </div>
+                        </>
+                        )}
+                        </div>
+                        <div className={styles.profileEditor}>
+                            <img
+                                className={styles.profileImage}
+                                src={profileImageFailed ? profileImage.src : getProfileImageUrl(user.members?.member_code)}
+                                alt="profile"
+                                onError={() => setProfileImageFailed(true)}
+                            />
+                            <input
+                                ref={profileInputRef}
+                                type="file"
+                                accept="image/*"
+                                className={styles.hiddenFileInput}
+                                onChange={handleProfileImageChange}
+                            />
+                            <button
+                                className={styles.secondaryButton + " " + styles.profileimgButton}
+                                type="button"
+                                onClick={openProfileFilePicker}
+                                disabled={profileUploading || !user.members?.member_code}
+                            >
+                                {profileUploading ? "업로드 중..." : "프로필 사진 변경"}
+                            </button>
+                            {!user.members?.member_code && (
+                                <p className={styles.helper}>회원 코드가 없어 업로드할 수 없습니다.</p>
+                            )}
+                            {profileUploadError && <p className={styles.error}>{profileUploadError}</p>}
+                        </div>
                     </div>
                 ) : (
                     <p className={styles.helper}>기본 정보를 확인하는 중입니다.</p>
@@ -542,6 +697,7 @@ export default function MyPage() {
                 interviewSubmitting={interviewSubmitting}
                 interviewFeedback={interviewFeedback}
                 onSubmitInterviewChoices={submitInterviewChoices}
+                
             />
             {user?.members?.president === true && (
                 <AdminSection
@@ -576,6 +732,13 @@ export default function MyPage() {
                     noticeFeedback={noticeFeedback}
                 />
             )}
+            <button
+                className={styles.secondaryButton + " " + styles.logoutButton}
+                type="button"
+                onClick={() => signOut({ callbackUrl: "/" })}
+                >
+                로그아웃
+            </button>
         </div>
     )
 }

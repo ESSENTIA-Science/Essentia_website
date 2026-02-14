@@ -18,7 +18,7 @@ export default function ObviumNihilPage() {
         </p>
         <h3 className={styles.sectionTitle}>진행 멤버</h3>
         <p className={styles.body}>
-          박현빈, 헌셔효, 최해준, 양성재, 헌영준
+          박현빈, 헌셔효, 최해준, 양성재, 현영준
         </p>
       </section>
     </div>

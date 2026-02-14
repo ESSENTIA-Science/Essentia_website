@@ -82,6 +82,15 @@
   background: rgba(255, 255, 255, 0.12);
 }
 
+.toolbar button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.hiddenFileInput {
+  display: none;
+}
+
 .divider {
   width: 1px;
   height: 18px;

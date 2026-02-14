@@ -43,6 +43,12 @@
   line-height: 1.8;
 }
 
+.content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
 .actions {
   display: flex;
   gap: 8px;

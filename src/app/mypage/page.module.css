@@ -6,7 +6,8 @@
   --button-primary-hover: #383838;
   --button-secondary-hover: #f2f2f2;
 
-  display: grid;
+  display: flex;
+  flex-direction: column;
   place-items: center;
   min-height: 100svh;
   font-family: var(--font-pretendard), "Noto Serif", serif;
@@ -19,7 +20,8 @@
 }
 
 .card {
-  width: min(720px, 100%);
+  width: fit-content;
+  max-width: 100%;
   background: rgba(255, 255, 255, 0.9);
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 20px;
@@ -28,6 +30,15 @@
   gap: 16px;
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
   margin-bottom: 30px;
+}
+
+.cardBody {
+  display: grid;
+  grid-template-columns: max-content max-content;
+  gap: 0;
+  align-items: start;
+  width: max-content;
+  justify-self: start;
 }
 
 .adminSection {
@@ -207,6 +218,7 @@
 }
 
 .title {
+  width: 100%;
   margin: 0;
   font-size: 30px;
 }
@@ -231,11 +243,16 @@
 .infoGrid {
   display: grid;
   gap: 14px;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: 190px 240px 130px;
+  justify-content: start;
   grid-template-areas:
     "name email birth"
-    "sex school ."
-    "dept class logout";
+    "sex school dummy"
+    "dept class code";
+}
+
+.infoGrid > div {
+  width: 100%;
 }
 
 .infoName {
@@ -258,6 +275,10 @@
   grid-area: school;
 }
 
+.infoDumy {
+  grid-area: dummy;
+}
+
 .infoDept {
   grid-area: dept;
 }
@@ -266,10 +287,39 @@
   grid-area: class;
 }
 
+.infoCode {
+  grid-area: code;
+}
+
+.profileEditor {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-content: start;
+}
+
+.profileImage {
+  width: 180px;
+  height: 180px;
+  border-radius: 16px;
+  object-fit: cover;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: #fff;
+}
+
+.profileimgButton{
+  width: 180px;
+}
+
+.hiddenFileInput {
+  display: none;
+}
+
 .logoutButton {
-  grid-area: logout;
   justify-self: start;
-  align-self: end;
 }
 
 .label {
@@ -339,6 +389,11 @@
   justify-self: start;
 }
 
+.secondaryButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 .orgForm {
   display: grid;
   gap: 10px;
@@ -401,6 +456,14 @@
     margin-top: 120px;
   }
 
+  .cardBody {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .profileEditor {
+    justify-items: start;
+  }
+
   .adminSection,
   .applicantSection {
     padding: 24px;
@@ -440,7 +503,8 @@
       "school"
       "dept"
       "class"
-      "logout";
+      "code"
+      "dummy";
   }
 
   .logoutButton {

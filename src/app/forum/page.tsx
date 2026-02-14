@@ -30,7 +30,9 @@ export default function ForumPage() {
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isImageUploading, setIsImageUploading] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const categories = ["공지", "자유", "ICAROS", "Obvium Nihil"];
   const canWrite = Boolean(member);
@@ -95,6 +97,140 @@ export default function ForumPage() {
       alert("하루 글 작성 횟수(3회)를 초과했습니다.");
     }
   }, [error]);
+
+  const insertMarkdownImage = (url: string, altText: string) => {
+    const markdown = `![${altText}](${url})`;
+    const textarea = textareaRef.current;
+
+    if (!textarea) {
+      setForm((prev) => ({
+        ...prev,
+        content: prev.content ? `${prev.content}\n${markdown}` : markdown,
+      }));
+      return;
+    }
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const before = form.content.slice(0, start);
+    const after = form.content.slice(end);
+    const prefix = before.length > 0 && !before.endsWith("\n") ? "\n" : "";
+    const suffix = after.length > 0 && !after.startsWith("\n") ? "\n" : "";
+    const snippet = `${prefix}${markdown}${suffix}`;
+    const next = `${before}${snippet}${after}`;
+    const cursor = before.length + snippet.length;
+
+    setForm((prev) => ({ ...prev, content: next }));
+    requestAnimationFrame(() => {
+      textarea.focus();
+      textarea.setSelectionRange(cursor, cursor);
+    });
+  };
+
+  const handleImageButtonClick = () => {
+    if (isImageUploading) return;
+    fileInputRef.current?.click();
+  };
+
+  const loadImageElement = (file: File) =>
+    new Promise<HTMLImageElement>((resolve, reject) => {
+      const objectUrl = URL.createObjectURL(file);
+      const image = new Image();
+
+      image.onload = () => {
+        URL.revokeObjectURL(objectUrl);
+        resolve(image);
+      };
+
+      image.onerror = () => {
+        URL.revokeObjectURL(objectUrl);
+        reject(new Error("Failed to read image"));
+      };
+
+      image.src = objectUrl;
+    });
+
+  const resizeImageForUpload = async (file: File) => {
+    const resizableMimeTypes = new Set(["image/jpeg", "image/png", "image/webp"]);
+    if (!resizableMimeTypes.has(file.type)) {
+      return file;
+    }
+
+    const image = await loadImageElement(file);
+    const editorWidth = textareaRef.current?.clientWidth ?? 720;
+    const maxWidth = Math.max(1, Math.floor(editorWidth * 0.5));
+
+    if (image.naturalWidth <= maxWidth) {
+      return file;
+    }
+
+    const scale = maxWidth / image.naturalWidth;
+    const targetWidth = maxWidth;
+    const targetHeight = Math.max(1, Math.round(image.naturalHeight * scale));
+
+    const canvas = document.createElement("canvas");
+    canvas.width = targetWidth;
+    canvas.height = targetHeight;
+
+    const context = canvas.getContext("2d");
+    if (!context) {
+      return file;
+    }
+
+    context.drawImage(image, 0, 0, targetWidth, targetHeight);
+
+    const blob = await new Promise<Blob>((resolve, reject) => {
+      canvas.toBlob(
+        (value) => {
+          if (!value) {
+            reject(new Error("Failed to resize image"));
+            return;
+          }
+          resolve(value);
+        },
+        file.type,
+        file.type === "image/png" ? undefined : 0.9
+      );
+    });
+
+    return new File([blob], file.name, {
+      type: file.type,
+      lastModified: Date.now(),
+    });
+  };
+
+  const handleImageFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    setError(null);
+    setIsImageUploading(true);
+
+    try {
+      const uploadFile = await resizeImageForUpload(file);
+      const payload = new FormData();
+      payload.append("file", uploadFile);
+
+      const res = await fetch("/api/forum/upload", {
+        method: "POST",
+        body: payload,
+      });
+      const data = await res.json();
+
+      if (!res.ok || typeof data?.url !== "string") {
+        throw new Error(data?.error ?? "Failed to upload image");
+      }
+
+      const altText = file.name.replace(/\.[^.]+$/, "").trim() || "image";
+      insertMarkdownImage(data.url, altText);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Unknown error";
+      setError(message);
+    } finally {
+      event.target.value = "";
+      setIsImageUploading(false);
+    }
+  };
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -278,9 +414,18 @@ export default function ForumPage() {
                 <button type="button" onClick={() => applyFormat("italic")}><em>I</em></button>
                 <button type="button" onClick={() => applyFormat("bullet")}>-</button>
                 <button type="button" onClick={() => applyFormat("link")}>Link</button>
-                <button type="button" onClick={() => applyFormat("image")}>Img</button>
+                <button type="button" onClick={handleImageButtonClick} disabled={isImageUploading}>
+                  {isImageUploading ? "Uploading..." : "Img"}
+                </button>
                 <button type="button" onClick={() => applyFormat("code")}>{"</>"}</button>
               </div>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/jpeg,image/png,image/webp,image/gif,image/svg+xml"
+                onChange={handleImageFileChange}
+                className={styles.hiddenFileInput}
+              />
               <textarea
                 className={styles.textarea}
                 placeholder="본문 (Markdown 지원)"
@@ -290,7 +435,7 @@ export default function ForumPage() {
                 required
               />
               <div className={styles.formBtnRow}>
-                <button className={styles.primaryButton} type="submit" disabled={isSubmitting}>
+                <button className={styles.primaryButton} type="submit" disabled={isSubmitting || isImageUploading}>
                   등록
                 </button>
                 <p>부적절한 게시글 작성 시 삭제조치 될 수도 있습니다.</p>
